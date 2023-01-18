@@ -42,7 +42,7 @@ const HomeScreen = ({navigation}) => {
             // Задаем разметку частей слева и справа от заголовка
             headerLeft: () => (
                 <View style={{ marginLeft: 20 }}>
-                    <TouchableOpacity activeOpacity={0.5} onPress={()=>alert("Navigate to UserProfileScreen")}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Profile")} activeOpacity={0.5}>
                         <Avatar rounded source={{ uri: auth?.currentUser?.photoURL }}/>
                     </TouchableOpacity>
                 </View>
@@ -57,7 +57,7 @@ const HomeScreen = ({navigation}) => {
                     <TouchableOpacity onPress={() => navigation.navigate("AddChat")} activeOpacity={0.5}>
                         <SimpleLineIcons name='pencil' size={24} color="black"/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>alert("Navigate to SearchScreen")} activeOpacity={0.5}>
+                    <TouchableOpacity onPress={() => navigation.navigate("FindChat")} activeOpacity={0.5}>
                         <Ionicons name='search' size={24} color="black"/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={signOut} activeOpacity={0.5}>
