@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { addDoc, collection, onSnapshot, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
+
 const ChatScreen = ( { navigation, route }) => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
@@ -93,6 +94,11 @@ const ChatScreen = ( { navigation, route }) => {
         <ScrollView contentContainerStyle={{paddingTop: 15}}>
           {messages.map(({id, data}) => (
              data.email === auth.currentUser.email ? (
+              <TouchableOpacity
+                onPress={() => {
+                  const docR = deleteDoc(doc(db, "chats", route.params.id, "messages", id))
+                    .catch((error) => alert(error.message));
+                }}>
                 <View key={id} style={styles.userMessage}>
                   <Avatar 
                   rounded 
@@ -108,8 +114,24 @@ const ChatScreen = ( { navigation, route }) => {
                   right={-5}
                   size={30}/>
                   <Text style={styles.userText}>{data.message}</Text>
+                  <View containerStyle={{
+                    position: "absolute",
+                    bottom: -15,
+                    right: 25,
+                  }}
+                    position="absolute"
+                    bottom={-15}
+                    right={25}
+                    size={30}>
+
+
+
+                  </View>
+
                 </View>
-             ) : (
+              </TouchableOpacity>
+
+            ) : (
                 <View key={id} style={styles.senderMessage}>
                   <Text style={styles.senderText}>{data.message}</Text>
                   <Text style={styles.senderName}>{data.displayName}</Text>
@@ -202,4 +224,9 @@ const styles = StyleSheet.create({
     color: "grey",
     borderRadius: 30,
   },
+  del: {
+    position: "absolute",
+    bottom: -15,
+    right: -5,
+  }
 });
